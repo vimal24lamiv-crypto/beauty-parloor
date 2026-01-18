@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THARANA BEAUTY PARLOUR | Bridal Studio</title>
+    <link rel="stylesheet" href="htt    ps://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="top-bar">Tharana Bridal Studio Make Up & Hair Style</div>
+
+<header>
+    <div class="container header-container">
+        <div class="logo">
+            <span class="brand">THARANA</span><br>
+            <span class="tagline">Beauty Parlour</span>
+        </div>
+        <nav>
+            <a href="#services">Services</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#book" class="book-btn">Book Now</a>
+        </nav>
+    </div>
+</header>
+
+<section class="parallax-section hero-parallax"></section>
+
+<section id="services" class="content-section">
+    <div class="container">
+        <h2 class="section-title">Our Premium Services</h2>
+        <div class="services-grid">
+            <div class="service-box">
+                <div class="icon-wrap"><i class="fas fa-spa"></i></div>
+                <h4>Spa Center</h4>
+                <p>Relaxing body treatments for total rejuvenation.</p>
+            </div>
+            <div class="service-box">
+                <div class="icon-wrap"><i class="fas fa-cut"></i></div>
+                <h4>Hair Salon</h4>
+                <p>Expert hair styling and professional bridal cuts.</p>
+            </div>
+            <div class="service-box">
+                <div class="icon-wrap"><i class="fas fa-magic"></i></div>
+                <h4>Cosmetics</h4>
+                <p>Luxury makeup artistry for your special moments.</p>
+            </div>
+            <div class="service-box">
+                <div class="icon-wrap"><i class="fas fa-leaf"></i></div>
+                <h4>Wellness</h4>
+                <p>Natural care for long-lasting radiant beauty.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="parallax-section middle-parallax"></section>
+
+<section id="gallery" class="content-section">
+    <div class="container">
+        <h2 class="section-title">Visual Excellence</h2>
+        <div class="gallery-container">
+            <div class="gallery-slide active"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80"></div>
+            <div class="gallery-slide"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"></div>
+            <div class="gallery-slide"><img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80"></div>
+        </div>
+    </div>
+</section>
+
+<section id="book" class="content-section grey-bg">
+    <div class="container narrow-container">
+        <div class="booking-card">
+            <h2 class="section-title">Secure Your Slot</h2>
+            <form id="bookingForm">
+                <input type="text" id="userName" placeholder="Full Name" required>
+                <input type="tel" id="userPhone" placeholder="Phone Number" required>
+                <select id="userService" required>
+                    <option value="" disabled selected>Select Your Service</option>
+                    <option data-price="250">Bridal Makeup — $250</option>
+                    <option data-price="95">Party Makeup — $95</option>
+                    <option data-price="80">Hair Styling — $80</option>
+                </select>
+                <div class="price-display">Service Total: <span id="priceDisplay">$0.00</span></div>
+                <div class="form-row">
+                    <input type="date" id="userDate" required>
+                    <input type="time" id="userTime" required>
+                </div>
+                <button type="submit" class="submit-button">Request My Appointment</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    const serviceSelect = document.getElementById('userService');
+    const priceDisplay = document.getElementById('priceDisplay');
+
+    serviceSelect.addEventListener('change', function() {
+        const price = this.options[this.selectedIndex].getAttribute('data-price');
+        priceDisplay.innerText = `$${price}.00`;
+    });
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault(); 
+        
+        // Get Form Values
+        const name = document.getElementById('userName').value;
+        const phone = document.getElementById('userPhone').value;
+        const service = serviceSelect.options[serviceSelect.selectedIndex].text.split(' — ')[0];
+        const price = serviceSelect.options[serviceSelect.selectedIndex].getAttribute('data-price');
+        const date = document.getElementById('userDate').value;
+        const time = document.getElementById('userTime').value;
+
+        // CAPTURE REAL SYSTEM TIME
+        const now = new Date();
+        const realTimeSave = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        const newBooking = { 
+            name, phone, service, price: `$${price}.00`, date, time, 
+            bookedAt: realTimeSave 
+        };
+
+        let historyList = JSON.parse(localStorage.getItem('parlourHistory')) || [];
+        historyList.push(newBooking);
+        localStorage.setItem('parlourHistory', JSON.stringify(historyList));
+        localStorage.setItem('latestBooking', JSON.stringify(newBooking));
+
+        window.location.href = 'submit.html';
+    });
+
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.gallery-slide');
+    setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }, 3500);
+</script>
+</body>
+</html>

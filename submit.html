@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Successful | Tharana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    #button{
+        color: blue;
+        border-radius: 120%;
+
+    }
+    #button.hover{
+        color:aliceblue;
+    }
+</style>
+<body class="bg-[#fdf8f8] font-sans flex items-center justify-center min-h-screen p-4">
+
+    <div class="max-w-lg w-full bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center border border-rose-50">
+        <div class="w-20 h-20 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 text-4xl animate-pulse">
+            <i class="fas fa-check-circle"></i>
+        </div>
+
+        <h1 class="text-3xl font-serif text-rose-950 mb-2">Successfully Submitted!</h1>
+        <p class="text-gray-500 mb-8">We have captured your beauty appointment details.</p>
+
+        <div class="bg-rose-50/50 rounded-3xl p-6 text-left border border-rose-100 mb-8 space-y-4">
+            <h2 class="text-[10px] uppercase tracking-[0.2em] font-bold text-rose-400 border-b border-rose-100 pb-2">Booking Preview</h2>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Name</p>
+                    <p id="resName" class="text-sm font-semibold text-gray-700">-</p>
+                </div>
+                <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Phone</p>
+                    <p id="resPhone" class="text-sm font-semibold text-gray-700">-</p>
+                </div>
+                <div class="col-span-2">
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Service Requested</p>
+                    <p id="resService" class="text-sm font-semibold text-rose-700">-</p>
+                </div>
+                <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Date</p>
+                    <p id="resDate" class="text-sm font-semibold text-gray-700">-</p>
+                </div>
+                <div>
+                    <p class="text-[9px] uppercase text-gray-400 font-bold">Time</p>
+                    <p id="resTime" class="text-sm font-semibold text-gray-700">-</p>
+                </div>
+            </div>
+        </div>
+
+        <div>
+           
+            <a id="button" href="index.html"> Back To Home</a>
+        </div>
+
+       
+    </div>
+
+    <script>
+        window.onload = function() {
+            const data = JSON.parse(localStorage.getItem('latestBooking'));
+            if (data) {
+                document.getElementById('resName').innerText = data.name;
+                document.getElementById('resPhone').innerText = data.phone;
+                document.getElementById('resService').innerText = data.service;
+                document.getElementById('resDate').innerText = data.date;
+                document.getElementById('resTime').innerText = data.time;
+            } else {
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
+</body>
+</html>
